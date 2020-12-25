@@ -77,7 +77,6 @@ systemd-python==234
 toml==0.10.2
 transitions==0.8.5
 Twisted==18.9.0
-ufw==0.36
 unattended-upgrades==0.1
 uritemplate==3.0.1
 urllib3==1.25.8
