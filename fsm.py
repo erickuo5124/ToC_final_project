@@ -2,10 +2,14 @@ from transitions.extensions import GraphMachine
 from utils import send_text_message, send_flex_message, parse_question
 import pygsheets
 
+import os
+from dotenv import load_dotenv
+
 class TocMachine(GraphMachine):
     def __init__(self, **machine_configs):
         self.machine = GraphMachine(model=self, **machine_configs)
         self.reset()
+        load_dotenv()
 
     # conditions
     def start_test_word(self, event):
@@ -66,8 +70,8 @@ class TocMachine(GraphMachine):
 
     # other
     def reset(self):
-        gc = pygsheets.authorize(service_account_file='./test-9db5da40b6b4.json')
-        self.sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1FwGHUxmmWP_cx4TET16EDhwkvanvMZTFIXNjc8j4bfg')
+        gc = pygsheets.authorize(service_account_file='./key.json')
+        self.sh = gc.open_by_url(os.getenv("GOOGLE_DOC_URL", None))
         wks_read = self.sh[0]
         self.question_count = 0
         self.question_set = wks_read.get_all_records()
