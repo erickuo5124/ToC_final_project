@@ -50,7 +50,7 @@ def handleTrigger(event):
     if machine.state == "name":
         return machine.start_test(event)
     if machine.state == "questions":
-        return machine.next_question(event)
+        return machine.end_of_question(event)
 
 app = Flask(__name__, static_url_path="")
 
