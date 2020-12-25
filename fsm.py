@@ -29,6 +29,12 @@ class TocMachine(GraphMachine):
             if self.question_count < len(self.question_set):
                 self.next_question(event)
             else:
+                wks_write = self.sh[1]
+                data = [self.username, *self.ans]
+                wks_write.append_table(data, start='A2')
+                reply_token = event.reply_token
+                send_text_message(reply_token, f'嗨，{self.username}\n你的答案是{self.ans}')
+                self.reset()
                 self.go_back(event)
         else: 
             print(options, text)
@@ -58,15 +64,7 @@ class TocMachine(GraphMachine):
     def on_exit_questions(self, event):
         print(f'*****exit question {self.question_count}')
         text = event.message.text
-        self.ans.append(text)
-
-    def on_enter_user(self, event):
-        wks_write = self.sh[1]
-        data = [self.username, *self.ans]
-        wks_write.append_table(data, start='A2')
-        reply_token = event.reply_token
-        send_text_message(reply_token, f'嗨，{self.username}\n你的答案是{self.ans}')
-        self.reset()
+        self.ans.append(text)        
 
     # other
     def reset(self):
