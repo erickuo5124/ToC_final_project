@@ -33,3 +33,5 @@
 
 ![](https://i.imgur.com/cRCbSPl.png)
 
+## FSM
+![](https://i.imgur.com/oXd3Qfl.png)
