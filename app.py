@@ -44,7 +44,9 @@ machine = TocMachine(
 
 # Handle State Trigger
 def handleTrigger(event):
-    print("Server Handling State : %s" % machine.state)
+    print("==========Server Handling State : %s==========" % machine.state)
+    print(machine.username, machine.question_count, machine.ans)
+    print("==============================================")
     if machine.state == "user":
         return machine.advance(event)
     if machine.state == "name":
@@ -120,7 +122,7 @@ def webhook_handler():
         # print(f"REQUEST BODY: \n{body}")
         response = handleTrigger(event)
         if response == False:
-            send_text_message(event.reply_token, "???")
+            send_text_message(event.reply_token, "輸入\"開始測驗\"")
 
     return "OK"
 

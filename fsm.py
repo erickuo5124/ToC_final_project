@@ -25,6 +25,7 @@ class TocMachine(GraphMachine):
         ]
         text = event.message.text
         if text in options:
+            self.ans.append(text)  
             self.question_count += 1
             if self.question_count < len(self.question_set):
                 self.next_question(event)
@@ -37,18 +38,17 @@ class TocMachine(GraphMachine):
                 self.reset()
                 self.go_back(event)
         else: 
-            print(options, text)
             reply_token = event.reply_token
             send_text_message(reply_token, "沒有這個選項")
 
     # states
     def on_enter_name(self, event):
-        print('enter name')
+        print('-----enter name')
         reply_token = event.reply_token
         send_text_message(reply_token, "請輸入你的名字")
 
     def on_exit_name(self, event):
-        print('exit name')
+        print('*****exit name')
         text = event.message.text
         self.username = text
 
@@ -62,9 +62,7 @@ class TocMachine(GraphMachine):
         )
     
     def on_exit_questions(self, event):
-        print(f'*****exit question {self.question_count}')
-        text = event.message.text
-        self.ans.append(text)        
+        print(f'*****exit question {self.question_count}')      
 
     # other
     def reset(self):
